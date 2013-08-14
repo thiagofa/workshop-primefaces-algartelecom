@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+		<h:outputStylesheet library="css" name="estilos.css" />
+	</h:head>
+
+	<h:body>
+		<h:form>
+			<p:growl autoUpdate="true" />
+		
+			<p:panelGrid columns="2">
+				<f:facet name="header">Teste</f:facet>
+				
+				<p:outputLabel value="Login" for="login" />
+				<p:inputText value="#{cadastroUsuarioBean.login}" id="login">
+					<p:ajax event="change" listener="#{cadastroUsuarioBean.verificarLogin}" />
+				</p:inputText>
+				
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText value="#{cadastroUsuarioBean.nome}" id="nome"
+					required="true" />
+			</p:panelGrid>
+			
+		</h:form>
+		
+	</h:body>
+
+</html>

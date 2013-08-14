@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+	</h:head>
+
+	<f:metadata>
+		<f:event listener="#{testeBean.preRender}" type="preRenderView"></f:event>
+	</f:metadata>
+
+	<h:body>
+		<h:form>
+		
+			<p:inputText value="#{testeBean.pessoa.nome}" />
+			<p:commandButton value="Testar" action="#{testeBean.testar}" 
+				update=":frm2:nomeInvertido" />
+				
+		</h:form>
+		
+		<h:form id="frm2">
+			<h:panelGroup id="pnl">
+				<h:outputText value="#{testeBean.pessoa.nomeInvertido}" id="nomeInvertido" />
+			</h:panelGroup>
+		</h:form>
+	</h:body>
+
+</html>

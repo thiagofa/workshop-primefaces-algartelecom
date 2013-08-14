@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</h:head>
+
+	<h:body>
+		<h:form>
+			<p:commandButton value="Testar" onclick="conf.show(); return false;"/>
+			
+			<p:confirmDialog widgetVar="conf" header="Confirmação" message="Tem certeza que deseja testar?">
+				<p:commandButton value="Sim" icon="ui-icon-check"
+					action="#{meuBean.testar}" oncomplete="conf.hide()" />
+        		<p:button value="Não" icon="ui-icon-close" onclick="conf.hide()" />
+			</p:confirmDialog>
+		</h:form>
+	</h:body>
+
+</html>

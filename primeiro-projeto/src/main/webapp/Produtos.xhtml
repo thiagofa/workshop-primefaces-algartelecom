@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+		<h:outputStylesheet library="css" name="estilos.css" />
+	</h:head>
+
+	<h:body>
+		<h:form id="frm">
+			<h1>Produtos</h1>
+		
+			<p:messages id="messages" />
+
+			<p:commandButton value="Novo produto"
+				action="#{produtosBean.prepararNovoProduto}"
+				process="@this" update=":frm:novoProdutoDialog" 
+				oncomplete="novoProdutoWidget.show()" />
+		
+			<p:dataTable value="#{produtosBean.produtos}" var="produto"
+					style="margin-top: 10px" id="produtosTable" 
+					emptyMessage="Não existem produtos">
+				<p:column headerText="Nome">
+					<h:outputText value="#{produto.nome}"/>
+				</p:column>
+				<p:column headerText="Categoria" width="140">
+					<h:outputText value="#{produto.categoria}"/>
+				</p:column>
+				<p:column headerText="Valor unitário" width="100" style="text-align: right">
+					<h:outputText value="#{produto.valor}">
+						<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Estoque" width="100" style="text-align: center">
+					<h:outputText value="#{produto.quantidadeEstoque}" />
+				</p:column>
+				<p:column width="50">
+					<p:commandLink process="@this" oncomplete="exclusaoProdutoWidget.show()"
+							id="linkExclusao">
+						<f:setPropertyActionListener target="#{produtosBean.produtoSelecionado}" 
+							value="#{produto}" />
+						<h:graphicImage library="imagens" name="trash.png" />
+					</p:commandLink>
+					
+					<p:tooltip for="linkExclusao" value="Excluir" />
+				</p:column>
+			</p:dataTable>
+			
+			<p:confirmDialog header="Confirmação de exclusão" 
+				message="Tem certeza que deseja excluir o produto?" 
+				widgetVar="exclusaoProdutoWidget">
+				<p:button value="Não" onclick="exclusaoProdutoWidget.hide(); return false" />
+				<p:commandButton value="Sim" action="#{produtosBean.excluir}"
+					process="@this" update=":frm:produtosTable" 
+					oncomplete="exclusaoProdutoWidget.hide()"/>
+			</p:confirmDialog>
+			
+			<p:dialog header="Novo produto" modal="true" resizable="false"
+					widgetVar="novoProdutoWidget" draggable="true" id="novoProdutoDialog">
+				<p:messages id="novoProdutoMessages" />
+				<p:defaultCommand target=":frm:incluirProdutoButton" scope="novoProdutoDialog" />
+				
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome" for="nome" />
+					<p:inputText size="30" value="#{produtosBean.produto.nome}"
+						required="true" id="nome" />
+					
+					<p:outputLabel value="Categoria" for="categoria" />
+					<p:inputText size="30" value="#{produtosBean.produto.categoria}"
+						required="true" id="categoria" />
+					
+					<p:outputLabel value="Valor unitário" for="valor" />
+					<p:inputText size="15" value="#{produtosBean.produto.valor}" 
+						 required="true" id="valor" />
+					
+					<p:outputLabel value="Estoque" for="estoque" />
+					<p:inputText size="15" value="#{produtosBean.produto.quantidadeEstoque}" 
+						required="true" id="estoque" validator="br.com.algartelecom.EstoqueMinimo"/>
+					
+					<p:spacer />
+					<p:commandButton value="Incluir" action="#{produtosBean.incluir}" 
+						process="@parent" update=":frm:produtosTable, novoProdutoMessages" 
+						oncomplete="tratarInclusao(args)" id="incluirProdutoButton" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<script>
+			function tratarInclusao(args) {
+				if (!args.validationFailed) {
+					novoProdutoWidget.hide();
+				}
+			}
+			</script>
+			
+		</h:form>
+		
+	</h:body>
+
+</html>

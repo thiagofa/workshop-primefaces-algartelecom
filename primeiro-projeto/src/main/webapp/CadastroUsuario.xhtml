@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+	</h:head>
+
+	<h:body>
+		<h:form>
+			<p:messages autoUpdate="true" />
+		
+			<p:outputLabel value="Login" for="login" />
+			<p:inputText value="#{cadastroUsuarioBean.login}" id="login" />
+			<p:commandButton value="Verificar login" 
+				action="#{cadastroUsuarioBean.verificarLogin}"
+				process="login, @this" />
+			
+			<br/>
+			
+			<p:outputLabel value="Nome" for="nome" />
+			<p:inputText value="#{cadastroUsuarioBean.nome}" id="nome"
+				required="true" />
+			
+		</h:form>
+		
+	</h:body>
+
+</html>
